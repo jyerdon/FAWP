@@ -1,0 +1,115 @@
+<?php
+/*
+Plugin Name: Font Awesome for WordPress
+Description: Provides quick & clean method to use Font Awesome within WordPress
+Version: 1.0.0
+Author: Jacob Yerdon
+Author URI: http://www.linkedin.com/in/jyerdon
+*/
+
+/*  Copyright 2014  Jacob Yerdon  (email : jyerdon@gmail.com)
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License, version 2, as 
+    published by the Free Software Foundation.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+*/
+
+if(!defined('FAWP_VERSION')) {
+	define('FAWP_VERSION', 1.0); }
+	
+if(!defined('FAWP_CDN')) {
+	define('FAWP_CDN', '//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css'); }	
+
+register_deactivation_hook(__FILE__, 'fawp_deactivation');
+
+add_action('wp_head', 'fawp_enqueue_fa_css');
+add_action('admin_menu', 'fawp_init_options_page');					//connect to hook for addition of plugin menu
+add_option('fawp_fa_cdn', 'TRUE', '', 'yes'); 
+
+
+/**
+ * Plugin Deactivation Hooks
+ *
+ * @since 1.0.5
+ */
+function fawp_deactivation()
+{
+	remove_action('admin_menu', 'fawp_init_options_page');				//connect to hook for addition of plugin menu
+	remove_action('wp_head', 'fawp_enqueue_fa_css');					//action to include Font Awesome CSS
+	delete_option('fawp_fa_cdn');
+}
+
+/**
+ * Add Font Awesome CSS to WordPress
+ *
+ * This function will embed the Font Awesome CSS in WordPress
+ * using the FA CDN
+ *
+ * @since 1.0.0
+ *
+ */
+function fawp_enqueue_fa_css()
+{
+	if(get_option('fawp_fa_cdn') === 'TRUE') {
+		wp_enqueue_style('font-awesome-wordpress-jyp', FAWP_CDN); } 
+		
+	return;
+}
+
+/**
+ * Init the plugin options page 
+ *
+ * @since 1.0.0
+ */
+function fawp_init_options_page() 
+{
+	add_options_page('Font Awesome for WordPress', 'Font Awesome for WordPress', 'administrator', 'jy-plugin-fawp.php', 'fawp_settings_page');
+	add_action('admin_init', 'fawp_register_settings');
+}
+
+/**
+ * Init plugin settings group
+ *
+ * @since 1.0.0
+ */
+function fawp_register_settings() 
+{
+	register_setting('fawp-settings-group', 'fawp_fa_cdn');					//register our setting group - FA CDN
+}
+
+/**
+ * Plugin options page render
+ *
+ * @since 1.0.0
+ */
+function fawp_settings_page() 
+{
+	$facdntest = get_option('fawp_fa_cdn');
+
+	?>
+<div class="wrap">
+	<h2>Font Awesome for WordPress</h2>
+	<form method="post" action="options.php">
+    	<?php settings_fields('fawp-settings-group' ); ?>				
+    	<?php do_settings_sections('fawp-settings-group' ); ?>
+   	<br> 	
+	<strong>Enable Font Awesome in WordPress</strong>
+       	<br>
+       	<select name="fawp_fa_cdn" id="fawp_fa_cdn">
+   			<option value="TRUE" <?php selected($facdntest, 'TRUE'); ?>>Enable Font Awesome</option>
+    		<option value="FALSE" <?php selected($facdntest, 'FALSE'); ?>>Disable Font Awesome</option>
+		</select>
+    	<?php submit_button(); ?>
+	</form>
+</div>
+
+<?php } 

@@ -1,7 +1,7 @@
-FAWP
+QFA
 ====
 
-Font Awesome for WordPress
+Quick Font Awesome
 
 This plugin utilizes the FA CDN. The plugin uses the standard wp_enqueue_style API in order to queue up the minified CSS.
 

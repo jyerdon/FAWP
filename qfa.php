@@ -12,7 +12,7 @@
 /*	INIT BLOCK	*/
 require_once dirname(__FILE__).'/qfa_functions.php';				//include base & advanced functions
 require_once dirname(__FILE__).'/qfa_options_page.php';				//include options page functionality
-require_once dirname(__FILE__).'/st_toolbox_mod.php';					//include string operations toolbox
+require_once dirname(__FILE__).'/st_toolbox_mod.php';				//include string operations toolbox
 
 register_deactivation_hook(__FILE__, 'qfa_deactivation');			//deactivation hook
 

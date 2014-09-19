@@ -1,6 +1,6 @@
 <?php
 /* - - - - - - - - - - - - - - - - -
- * [PROGRAM NAME]		string toolbox [MODIFIED]
+ * [PROGRAM NAME]		string toolbox [MODIFIED - see https://github.com/jyerdon/st_toolbox for original]
  * [PROGRAM VERSION]	1.0.0
  * [LICENSE]			GPLv2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * [AUTHOR]				jyerdon (jyerdon@gmail.com)

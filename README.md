@@ -1,4 +1,4 @@
-QFA
+QFA (Beta)
 ====
 
 Quick Font Awesome
